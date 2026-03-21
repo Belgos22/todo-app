@@ -1,0 +1,17 @@
+# Système Windows
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Logs
+*.log
+npm-debug.log*
+
+# Variables d'environnement — NE JAMAIS commiter
+.env
+.env.local
+.env.production
