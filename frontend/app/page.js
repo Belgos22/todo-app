@@ -91,7 +91,7 @@ export default function Home() {
 
       {!loading && !error && todos.length === 0 && (
         <p style={{ color: '#adb5bd', textAlign: 'center', padding: '40px 0' }}>
-          Aucune tâche pour l'instant. Ajoutes-en une !
+          Aucune tâche pour l&lsquo;instant. Ajoutes-en une !
         </p>
       )}
 

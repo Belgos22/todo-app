@@ -1,0 +1,29 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: #f8f9fa;
+  color: #212529;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+}
+
+input[type="text"]:focus {
+  outline: 2px solid #4f8ef7;
+  border-color: transparent;
+}
+
+input[type="checkbox"] {
+  accent-color: #4f8ef7;
+}
+
+button:hover {
+  opacity: 0.85;
+}
