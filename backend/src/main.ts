@@ -11,7 +11,10 @@ async function bootstrap() {
   }));
 
   app.enableCors({
-    origin: 'http://localhost:3000',
+    origin: [
+      'http://localhost:3000',
+      'https://todo-app-delta-nine-22.vercel.app',
+    ],
     methods: ['GET', 'POST', 'PATCH', 'DELETE'],
   });
 
