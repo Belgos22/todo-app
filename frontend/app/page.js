@@ -7,12 +7,11 @@ import TodoItem from '../components/TodoItem'
 
 export default function Home() {
 
-  // ── État ──────────────────────────────────────────
   const [todos, setTodos] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [actionError, setActionError] = useState(null)
 
-  // ── Chargement initial ────────────────────────────
   useEffect(() => {
     loadTodos()
   }, [])
@@ -30,27 +29,38 @@ export default function Home() {
     }
   }
 
-  // ── Ajouter une tâche ─────────────────────────────
   async function handleAdd(title) {
-    const nouvelleTache = await createTodo(title)
-    setTodos([...todos, nouvelleTache])
+    setActionError(null)
+    try {
+      const nouvelleTache = await createTodo(title)
+      setTodos([nouvelleTache, ...todos])
+    } catch (err) {
+      setActionError(err.message)
+    }
   }
 
-  // ── Modifier le statut ────────────────────────────
   async function handleToggle(id, done) {
-    const tacheMiseAJour = await updateTodo(id, done)
-    setTodos(todos.map(todo =>
-      todo.id === id ? tacheMiseAJour : todo
-    ))
+    setActionError(null)
+    try {
+      const tacheMiseAJour = await updateTodo(id, done)
+      setTodos(todos.map(todo =>
+        todo.id === id ? tacheMiseAJour : todo
+      ))
+    } catch (err) {
+      setActionError(err.message)
+    }
   }
 
-  // ── Supprimer une tâche ───────────────────────────
   async function handleDelete(id) {
-    await deleteTodo(id)
-    setTodos(todos.filter(todo => todo.id !== id))
+    setActionError(null)
+    try {
+      await deleteTodo(id)
+      setTodos(todos.filter(todo => todo.id !== id))
+    } catch (err) {
+      setActionError(err.message)
+    }
   }
 
-  // ── Rendu ─────────────────────────────────────────
   return (
     <main style={{
       maxWidth: '600px',
@@ -70,6 +80,20 @@ export default function Home() {
       </p>
 
       <TodoForm onAdd={handleAdd} />
+
+      {actionError && (
+        <p style={{
+          color: '#dc3545',
+          backgroundColor: '#fff5f5',
+          padding: '12px',
+          borderRadius: '8px',
+          border: '1px solid #ffc9c9',
+          marginBottom: '16px',
+          fontSize: '14px',
+        }}>
+          {actionError}
+        </p>
+      )}
 
       {loading && (
         <p style={{ color: '#6c757d', textAlign: 'center' }}>
@@ -91,7 +115,7 @@ export default function Home() {
 
       {!loading && !error && todos.length === 0 && (
         <p style={{ color: '#adb5bd', textAlign: 'center', padding: '40px 0' }}>
-          Aucune tâche pour l&lsquo;instant. Ajoutes-en une !
+          Aucune tâche pour l&apos;instant. Ajoutes-en une !
         </p>
       )}
 
